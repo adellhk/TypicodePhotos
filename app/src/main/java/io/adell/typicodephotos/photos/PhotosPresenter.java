@@ -7,6 +7,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Adell on 9/13/2017.
@@ -22,7 +23,9 @@ public class PhotosPresenter implements PhotosContract.Presenter {
   }
 
   @Override public void start() {
-    Retrofit retrofit = new Retrofit.Builder().baseUrl(typicodePhotoUrl).build();
+    Retrofit retrofit = new Retrofit.Builder().baseUrl(typicodePhotoUrl)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build();
 
     if (typicodeService == null) {
       typicodeService = retrofit.create(TypicodeService.class);
