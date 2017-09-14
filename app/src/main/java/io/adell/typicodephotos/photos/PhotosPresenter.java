@@ -13,7 +13,7 @@ import retrofit2.Retrofit;
  */
 
 public class PhotosPresenter implements PhotosContract.Presenter {
-  private final String typicodePhotoUrl = "jsonplaceholder.typicode.com/photos";
+  private final String typicodePhotoUrl = "http://jsonplaceholder.typicode.com";
   private TypicodeService typicodeService;
   private PhotosContract.View photosView;
 
@@ -24,7 +24,9 @@ public class PhotosPresenter implements PhotosContract.Presenter {
   @Override public void start() {
     Retrofit retrofit = new Retrofit.Builder().baseUrl(typicodePhotoUrl).build();
 
-    typicodeService = retrofit.create(TypicodeService.class);
+    if (typicodeService == null) {
+      typicodeService = retrofit.create(TypicodeService.class);
+    }
     loadPhotos();
   }
 

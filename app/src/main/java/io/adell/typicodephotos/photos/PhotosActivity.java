@@ -11,6 +11,7 @@ public class PhotosActivity extends AppCompatActivity {
     setContentView(R.layout.photos_activity);
 
     PhotosFragment photosFragment = PhotosFragment.newInstance();
+    photosFragment.setPresenter(new PhotosPresenter(photosFragment));
     getSupportFragmentManager().beginTransaction().add(R.id.content_frame, photosFragment).commit();
   }
 }

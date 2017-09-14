@@ -40,6 +40,11 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
     return super.onCreateView(inflater, container, savedInstanceState);
   }
 
+  @Override public void onResume() {
+    super.onResume();
+    presenter.start();
+  }
+
   @Override public void setPresenter(PhotosContract.Presenter presenter) {
     this.presenter = presenter;
   }
