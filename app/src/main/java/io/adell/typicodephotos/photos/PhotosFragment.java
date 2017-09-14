@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import io.adell.typicodephotos.R;
 import io.adell.typicodephotos.data.Photo;
@@ -20,8 +21,9 @@ import java.util.List;
  * Created by Adell on 9/13/2017.
  */
 
-public class PhotosFragment extends Fragment {
+public class PhotosFragment extends Fragment implements PhotosContract.View {
   private PhotosAdapter photosAdapter = new PhotosAdapter(new ArrayList<Photo>(0));
+  private PhotosContract.Presenter presenter;
 
   public static PhotosFragment newInstance() {
     PhotosFragment photosFragment = new PhotosFragment();
@@ -36,6 +38,18 @@ public class PhotosFragment extends Fragment {
     ListView photosList = (ListView) root.findViewById(R.id.photos_list);
     photosList.setAdapter(photosAdapter);
     return super.onCreateView(inflater, container, savedInstanceState);
+  }
+
+  @Override public void setPresenter(PhotosContract.Presenter presenter) {
+    this.presenter = presenter;
+  }
+
+  @Override public void showPhotos(List<Photo> photos) {
+    photosAdapter.setPhotos(photos);
+  }
+
+  @Override public void showLoadPhotosFailure() {
+    Toast.makeText(getActivity(), "Unable to load photos from network.", Toast.LENGTH_SHORT).show();
   }
 
   private class PhotosAdapter extends BaseAdapter {
