@@ -1,12 +1,13 @@
-package io.adell.typicodephotos;
+package io.adell.typicodephotos.photos;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import io.adell.typicodephotos.R;
 
-public class MainActivity extends AppCompatActivity {
+public class PhotosActivity extends AppCompatActivity {
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    setContentView(R.layout.activity_main);
+    setContentView(R.layout.activity_photos);
   }
 }
