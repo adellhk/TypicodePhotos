@@ -89,7 +89,7 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
       }
 
       final Photo photo = getItem(i);
-      String title = photo.getId() + " - " + photo.getTitle();
+      String title = i + " - " + photo.getTitle();
 
       ((AppCompatTextView) row.findViewById(R.id.photo_item_title)).setText(title);
       AppCompatImageView photoItemImage =
