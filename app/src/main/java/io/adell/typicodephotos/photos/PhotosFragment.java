@@ -37,7 +37,7 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
 
     ListView photosList = (ListView) root.findViewById(R.id.photos_list);
     photosList.setAdapter(photosAdapter);
-    return super.onCreateView(inflater, container, savedInstanceState);
+    return root;
   }
 
   @Override public void onResume() {
@@ -60,11 +60,11 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
   private class PhotosAdapter extends BaseAdapter {
     private List<Photo> photos;
 
-    public PhotosAdapter(List<Photo> photos) {
+    PhotosAdapter(List<Photo> photos) {
       this.photos = photos;
     }
 
-    public void setPhotos(List<Photo> photos) {
+    void setPhotos(List<Photo> photos) {
       this.photos = photos;
       notifyDataSetChanged();
     }
@@ -100,7 +100,7 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
           .resizeDimen(R.dimen.photo_item_image, R.dimen.photo_item_image)
           .into(photoItemImage);
 
-      return view;
+      return row;
     }
   }
 }
