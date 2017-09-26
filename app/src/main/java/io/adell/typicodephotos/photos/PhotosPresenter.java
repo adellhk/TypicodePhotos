@@ -1,8 +1,11 @@
 package io.adell.typicodephotos.photos;
 
+import android.support.annotation.Nullable;
 import io.adell.typicodephotos.data.Photo;
 import io.adell.typicodephotos.data.TypicodeService;
+import io.adell.typicodephotos.di.ActivityScoped;
 import java.util.List;
+import javax.inject.Inject;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -13,14 +16,14 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Adell on 9/13/2017.
  */
 
+@ActivityScoped
 public class PhotosPresenter implements PhotosContract.Presenter {
   private final String typicodePhotoUrl = "http://jsonplaceholder.typicode.com";
   private TypicodeService typicodeService;
-  private PhotosContract.View photosView;
+  @Nullable PhotosContract.View photosView;
 
-  public PhotosPresenter(PhotosContract.View photosView) {
-    this.photosView = photosView;
-  }
+  @Inject
+  public PhotosPresenter(){}
 
   @Override public void start() {
     Retrofit retrofit = new Retrofit.Builder().baseUrl(typicodePhotoUrl)

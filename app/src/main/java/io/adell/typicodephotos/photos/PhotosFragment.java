@@ -2,7 +2,6 @@ package io.adell.typicodephotos.photos;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.AppCompatTextView;
 import android.view.LayoutInflater;
@@ -14,20 +13,21 @@ import android.widget.Toast;
 import com.squareup.picasso.Picasso;
 import io.adell.typicodephotos.R;
 import io.adell.typicodephotos.data.Photo;
+import io.adell.typicodephotos.di.ActivityScoped;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
 
 /**
  * Created by Adell on 9/13/2017.
  */
 
-public class PhotosFragment extends Fragment implements PhotosContract.View {
+@ActivityScoped public class PhotosFragment extends dagger.android.support.DaggerFragment
+    implements PhotosContract.View {
+  @Inject PhotosContract.Presenter presenter;
   private PhotosAdapter photosAdapter = new PhotosAdapter(new ArrayList<Photo>(0));
-  private PhotosContract.Presenter presenter;
 
-  public static PhotosFragment newInstance() {
-    PhotosFragment photosFragment = new PhotosFragment();
-    return photosFragment;
+  @Inject public PhotosFragment() {
   }
 
   @Nullable @Override
@@ -43,10 +43,6 @@ public class PhotosFragment extends Fragment implements PhotosContract.View {
   @Override public void onResume() {
     super.onResume();
     presenter.start();
-  }
-
-  @Override public void setPresenter(PhotosContract.Presenter presenter) {
-    this.presenter = presenter;
   }
 
   @Override public void showPhotos(List<Photo> photos) {
