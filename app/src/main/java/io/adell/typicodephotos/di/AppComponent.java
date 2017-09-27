@@ -7,6 +7,7 @@ import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
 import dagger.android.support.AndroidSupportInjectionModule;
 import io.adell.typicodephotos.TypicodePhotosApplication;
+import io.adell.typicodephotos.data.DataModule;
 import javax.inject.Singleton;
 
 /**
@@ -15,6 +16,7 @@ import javax.inject.Singleton;
 
 @Singleton
 @Component(modules = {
+    DataModule.class,
     ApplicationModule.class,
     ActivityBindingModule.class,
     AndroidSupportInjectionModule.class
@@ -31,7 +33,9 @@ public interface AppComponent extends AndroidInjector<DaggerApplication> {
   interface Builder {
 
     @BindsInstance
-    AppComponent.Builder application(Application application);
+    Builder application(Application application);
+
+    Builder dataModule(DataModule dataModule);
 
     AppComponent build();
   }
