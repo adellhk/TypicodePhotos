@@ -42,7 +42,7 @@ import javax.inject.Inject;
 
   @Override public void onResume() {
     super.onResume();
-    presenter.start();
+    presenter.takeView(this);
   }
 
   @Override public void showPhotos(List<Photo> photos) {

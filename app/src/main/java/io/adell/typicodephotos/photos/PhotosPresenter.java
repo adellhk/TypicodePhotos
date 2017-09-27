@@ -19,13 +19,35 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @ActivityScoped
 public class PhotosPresenter implements PhotosContract.Presenter {
   private final String typicodePhotoUrl = "http://jsonplaceholder.typicode.com";
+  @Nullable
+  PhotosContract.View photosView;
   private TypicodeService typicodeService;
-  @Nullable PhotosContract.View photosView;
 
   @Inject
-  public PhotosPresenter(){}
+  public PhotosPresenter() {}
 
-  @Override public void start() {
+  @Override
+  public void loadPhotos() {
+    typicodeService.getPhotos().enqueue(new Callback<List<Photo>>() {
+      @Override
+      public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
+        if (!response.isSuccessful()) {
+          photosView.showLoadPhotosFailure();
+        } else {
+          photosView.showPhotos(response.body());
+        }
+      }
+
+      @Override
+      public void onFailure(Call<List<Photo>> call, Throwable t) {
+        photosView.showLoadPhotosFailure();
+      }
+    });
+  }
+
+  @Override
+  public void takeView(PhotosContract.View view) {
+    photosView = view;
     Retrofit retrofit = new Retrofit.Builder().baseUrl(typicodePhotoUrl)
         .addConverterFactory(GsonConverterFactory.create())
         .build();
@@ -36,19 +58,8 @@ public class PhotosPresenter implements PhotosContract.Presenter {
     loadPhotos();
   }
 
-  @Override public void loadPhotos() {
-    typicodeService.getPhotos().enqueue(new Callback<List<Photo>>() {
-      @Override public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-        if (!response.isSuccessful()) {
-          photosView.showLoadPhotosFailure();
-        } else {
-          photosView.showPhotos(response.body());
-        }
-      }
-
-      @Override public void onFailure(Call<List<Photo>> call, Throwable t) {
-        photosView.showLoadPhotosFailure();
-      }
-    });
+  @Override
+  public void dropView() {
+    photosView = null;
   }
 }
