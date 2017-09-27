@@ -1,16 +1,19 @@
 package io.adell.typicodephotos.photos;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import dagger.Lazy;
+import dagger.android.support.DaggerAppCompatActivity;
 import io.adell.typicodephotos.R;
 import javax.inject.Inject;
 
-public class PhotosActivity extends AppCompatActivity {
-  @Inject PhotosPresenter photosPresenter;
-  @Inject Lazy<PhotosFragment> photosFragmentLazy;
+public class PhotosActivity extends DaggerAppCompatActivity {
+  @Inject
+  PhotosPresenter photosPresenter;
+  @Inject
+  Lazy<PhotosFragment> photosFragmentLazy;
 
-  @Override protected void onCreate(Bundle savedInstanceState) {
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.photos_activity);
 

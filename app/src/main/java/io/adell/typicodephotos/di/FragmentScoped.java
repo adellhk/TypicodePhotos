@@ -1,4 +1,4 @@
-package io.adell.typicodephotos.photos;
+package io.adell.typicodephotos.di;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

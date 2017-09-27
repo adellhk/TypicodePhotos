@@ -4,6 +4,7 @@ import dagger.Binds;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import io.adell.typicodephotos.di.ActivityScoped;
+import io.adell.typicodephotos.di.FragmentScoped;
 
 /**
  * Created by Adell on 9/25/2017.
