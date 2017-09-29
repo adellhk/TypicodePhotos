@@ -26,4 +26,11 @@ public class PhotosActivity extends DaggerAppCompatActivity {
           .commit();
     }
   }
+
+  @Override
+  protected void onDestroy() {
+    photosPresenter.destroy();
+    photosPresenter = null;
+    super.onDestroy();
+  }
 }

@@ -7,6 +7,7 @@ import io.adell.typicodephotos.di.ActivityScoped;
 import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.observers.DisposableObserver;
 import io.reactivex.schedulers.Schedulers;
@@ -22,6 +23,7 @@ public class PhotosPresenter implements PhotosContract.Presenter {
   @Nullable
   PhotosContract.View photosView;
   TypicodeService typicodeService;
+  CompositeDisposable compositeDisposable;
 
   @Inject
   public PhotosPresenter(TypicodeService typicodeService) {this.typicodeService = typicodeService;}
@@ -53,30 +55,19 @@ public class PhotosPresenter implements PhotosContract.Presenter {
 
               @Override
               public void onComplete() {
-                this.dispose();
               }
             });
-    //.subscribeWith(DisposableObserver<List<Photo>>);
-
-    //enqueue(new Callback<List<Photo>>() {
-    //  @Override
-    //  public void onResponse(Call<List<Photo>> call, Response<List<Photo>> response) {
-    //    if (!response.isSuccessful()) {
-    //      photosView.showLoadPhotosFailure();
-    //    } else {
-    //      photosView.showPhotos(response.body());
-    //    }
-    //  }
-    //
-    //  @Override
-    //  public void onFailure(Call<List<Photo>> call, Throwable t) {
-    //    photosView.showLoadPhotosFailure();
-    //  }
-    //});
+    compositeDisposable.add(disposable);
   }
 
   @Override
   public void dropView() {
     photosView = null;
+  }
+
+  @Override
+  public void destroy() {
+    compositeDisposable.clear();
+    dropView();
   }
 }

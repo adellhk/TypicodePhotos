@@ -45,6 +45,12 @@ import javax.inject.Inject;
     presenter.takeView(this);
   }
 
+  @Override
+  public void onDestroy() {
+    presenter.dropView();
+    super.onDestroy();
+  }
+
   @Override public void showPhotos(List<Photo> photos) {
     photosAdapter.setPhotos(photos);
   }
